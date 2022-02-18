@@ -1,0 +1,72 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+#title-bar {
+    position: absolute;
+    top: .5rem;
+    right: .8rem;
+  }
+
+.btn-circle-menu {
+    width: 5px;
+    height: 5px;
+    padding: 6px 0px;
+    border-radius: 50%;
+
+    border-radius: 50%;
+    font-weight: 500;
+
+    display: inline-block;
+    font-weight: 400;
+    color: #89879f;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.375rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 50%;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    margin-left: .15rem;
+}
+
+#title-bar-btns {
+    -webkit-app-region: no-drag;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: #bb86fc !important;
+    border-color: #bb86fc;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.card {
+  flex-direction: row;
+  background-color: #1e1e1e;
+  color: white;
+}
+.card img {
+  width: 30%;
+}
+
+.progress-bar{
+  background-color: #bb86fc !important;
+}

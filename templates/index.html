@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/main.css') }}">
+
+    <title>Manga Downloader</title>
+
+    <nav class="navbar pywebview-drag-region">
+        <div id="title-bar">
+            <div id="title-bar-btns">
+                <button id="min-btn" type="button" class="btn-warning btn-circle-menu" onclick="this.blur();"></button>
+                <button id="max-btn" type="button" class="btn-success btn-circle-menu" onclick="this.blur();"></button>
+                <button id="close-btn" type="button" class="btn-danger btn-circle-menu" onclick="this.blur();"></button>
+            </div>
+        </div>
+        <a href="#" class="sidebar-toggler">
+            <i data-feather="menu"></i>
+        </a>
+    </nav>
+  </head>
+  <body style="background-color: #121212;">
+
+    <div class="container">
+      <main role="main">
+        <div style="margin-top: 4rem;">
+          <input class="form-control mb-2" id="download_link" placeholder="Link to manga">
+          <button id="start_download" type="submit" class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i> Download</button>
+        </div>
+
+        <div id="downloads_container">
+
+          {% for download in downloads %}
+          <div class="download_container mt-3 mb-1" id="{{ download['_id'] }}">
+            <div class="card">
+              <img src="{{ download['image_url'] }}" style="max-width: 12%; height: auto;" class="card-img-top" draggable="false">
+              <div class="card-body">
+                <a href="javascript:void(0)" class="float-right" id="delete_download" download_id="{{ download['_id'] }}"><i class='fa fa-trash' style='color: red'></i></a>
+                <h5 class="card-title">{{ download['title'] }}</h5>
+                <p class="card-text">
+                  <span class="badge badge-secondary">{{ download['website_name'] }}</span> <span class="badge badge-secondary">{{ download['chapters'] }} Chapters</span> <span class="badge badge-secondary status-badge">{{ download['status'] }}</span>
+                </p>
+                <div class="progress" style="margin-top: 5em;">
+                  <div class="progress-bar" role="progressbar" style="width: {{ download['progress'] }}%;" aria-valuenow="{{ download['progress'] }}" aria-valuemin="0" aria-valuemax="100">{{ download['progress'] }}%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+
+        </div>
+
+      </main>
+    </div>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <!-- Optional JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='assets/js/menu.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='assets/js/progress.js') }}"></script>
+    
+  </body>
+</html>
