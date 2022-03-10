@@ -1,6 +1,7 @@
+from turtle import down
 from flask import Flask, render_template, request
 import webview
-from downloader import readm
+from downloader import readm, mangakakalot
 from tinymongo import TinyMongoClient
 import multiprocessing
 import psutil
@@ -35,28 +36,34 @@ def maximize_window():
 
 @app.route('/start_download', methods=['POST'])
 def start_download():
-    supported_websites = ['readm']
+    supported_websites = ['readm', 'mangakakalot']
     download_link = request.form['download_link']
 
-    if download_link.strip() == "" or download_link.split(".")[1] not in supported_websites:
+    website_name = download_link.split(".")[0].split("/")[-1]
+
+    if download_link.strip() == "" or website_name not in supported_websites:
         return {"success": False}
 
-    # Get Manga details from website
-    website_name = download_link.split(".")[1]
+    # Get Manga details from website and start download
     if website_name == "readm":
-        download_id = db.downloads.insert_one({
-            "website_name": website_name,
-            "download_link": download_link
-        }).inserted_id
-        download_data = readm.get_details(download_link, website_name)
+        download_id = db.downloads.insert_one({"website_name": website_name, "download_link": download_link}).inserted_id
+        download_data = readm.get_details(download_link)
 
         # Start download in background process
         process = multiprocessing.Process(target=readm.download, args=(download_link, download_data['title'], download_id,))
         process.start()
         process_id = process.pid
+    
+    elif website_name == 'mangakakalot':
+        download_id = db.downloads.insert_one({"website_name": website_name, "download_link": download_link}).inserted_id
+        download_data = mangakakalot.get_details(download_link)
+
+        # Start download in background process
+        process = multiprocessing.Process(target=mangakakalot.download, args=(download_link, download_data['title'], download_id,))
+        process.start()
+        process_id = process.pid
 
     db.downloads.update({"_id":download_id},{
-        "website_name": website_name,
         "domain": download_data['domain'],
         "image_url": download_data['image_url'],
         "title": download_data['title'],
