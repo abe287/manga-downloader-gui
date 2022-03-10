@@ -4,6 +4,7 @@ This is an application that downloads manga in bulk from websites. It will downl
 ## Supported Websites
 The following websites are currently supported:
 - Readm
+- Mangakakalot
 
 ## Setup
 Install all the required packages by using the following command
